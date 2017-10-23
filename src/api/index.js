@@ -1,14 +1,23 @@
 'use strict';
 
 const express = require('express');
-const todos = require('../../mock/todos.json')
+const Todo = require('../models/todo');
+// const todos = require('../../mock/todos.json')
 
 const router = express.Router();
 
 router.get('/todos', function (req, res) {
-  res.json({
-    todos: todos
-  });
+  Todo.find({
+
+  }, function (err, todos) {
+    if (err) {
+      return res.status(500).json({message: err.message})
+    }
+    res.json({
+      todos: todos
+    });
+  })
+
 })
 
 // TODO: add POST route
