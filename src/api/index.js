@@ -19,8 +19,6 @@ router.get('/todos', function (req, res) {
   })
 });
 
-// TODO: add POST route
-
 router.post('/todos', function (req, res) {
   var todo = req.body;
   Todo.create(todo, function (err, todo) {
@@ -35,8 +33,6 @@ router.post('/todos', function (req, res) {
     });
   })
 });
-
-// TODO: add PUT route
 
 router.put('/todos/:id', function (req, res) {
   var id = req.params.id;
@@ -59,6 +55,16 @@ router.put('/todos/:id', function (req, res) {
   })
 });
 
-// TODO: add DELETE route
+router.delete('/todos/:id', function (req, res) {
+  var id = req.params.id;
+  Todo.findByIdAndRemove(id, function (err, result) {
+    if (err) {
+      return res.status(500).json({ err: err.message });
+    }
+    res.json({
+      message: "Todo Deleted"
+    })
+  })
+});
 
 module.exports = router;
